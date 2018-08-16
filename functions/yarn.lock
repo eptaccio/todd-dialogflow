@@ -2583,6 +2583,12 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
+tccc-mga-bus@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/tccc-mga-bus/-/tccc-mga-bus-1.0.0.tgz#d80c8bfd79267337e129266b842758a6c78b3670"
+  dependencies:
+    axios "^0.18.0"
+
 through2@^2.0.0, through2@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"

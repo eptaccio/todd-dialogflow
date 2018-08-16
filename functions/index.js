@@ -1,4 +1,5 @@
 const functions = require('firebase-functions')
+const bus = require('tccc-mga-bus')
 
 const {
   WebhookClient
@@ -29,10 +30,17 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     agent.add('nope')
   }
 
+  function bus (agent) {
+    const busNumber = request.body.queryResult.parameters.bus_number
+    bus.getBusCalendarFromTerminal({ number: busNumber })
+    agent.add('Um segundo')
+  }
+
   const intentMap = new Map()
 
   intentMap.set('Default Welcome Intent', welcome)
   intentMap.set('Default Fallback Intent', fallback)
+  intentMap.set('bus para casa', bus)
 
   agent.handleRequest(intentMap)
 })
