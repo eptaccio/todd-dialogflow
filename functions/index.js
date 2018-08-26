@@ -30,10 +30,20 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, resp
     agent.add('nope')
   }
 
-  function bus (agent) {
+  async function bus (agent) {
     const busNumber = request.body.queryResult.parameters.bus_number
-    bus.getBusCalendarFromTerminal({ number: busNumber })
-    agent.add('Um segundo')
+
+    const result = await bus.getBusCalendarFromTerminal({
+      number: busNumber
+    })
+
+    const departures = result.calendar.map(
+    result => `${result.serviceDesc} \n ${result.departures.map(trip => `${trip.tripName} - ${trip.departure} \n`).join(' ')}`
+  )
+
+    departures.forEach(departure => {
+      agent.add(departure)
+    })
   }
 
   const intentMap = new Map()
