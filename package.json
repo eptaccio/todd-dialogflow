@@ -1,0 +1,13 @@
+{
+  "name": "todd-bot",
+  "description": " my personal assistant on dialogflow ",
+  "version": "0.0.1",
+  "author": "@eptaccio.",
+  "scripts": {
+    "start": "micro"
+  },
+  "dependencies": {
+    "micro": "^9.3.3",
+    "tccc-mga-bus": "^1.0.1"
+  }
+}
