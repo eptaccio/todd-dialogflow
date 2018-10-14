@@ -11,7 +11,7 @@ const serviceTypeMap = {
 const BUS_NOT_AVAIBLE_TODAY_MESSAGE = 'Essa linha não opera hoje :/'
 
 const formatTrips = departures =>
-  departures.map(trip => `${trip.tripName}: \n ${trip.departure} \n`).join('')
+  departures.map(trip => `${trip.departure}`).join('\n')
 
 const getService = (calendar, serviceType) => {
   const dayDepartures = calendar
@@ -21,7 +21,7 @@ const getService = (calendar, serviceType) => {
     return BUS_NOT_AVAIBLE_TODAY_MESSAGE
   }
 
-  return `${dayDepartures.serviceDesc} \n ${formatTrips(dayDepartures.departures)}`
+  return `${dayDepartures.serviceDesc}\n${formatTrips(dayDepartures.departures)}`
 }
 
 const handler = async body => {
