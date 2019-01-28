@@ -1,6 +1,8 @@
 const moment = require('moment-timezone')
 
-const getDate = () => moment.tz('America/Los_Angeles')
+moment.locale('pt-BR')
+
+const getDate = (...date) => moment(...date).tz('America/Sao_Paulo')
 
 const isSunday = () => {
   const date = getDate()
@@ -14,5 +16,6 @@ const isSaturday = () => {
 
 module.exports = {
   isSunday,
-  isSaturday
+  isSaturday,
+  getDate
 }

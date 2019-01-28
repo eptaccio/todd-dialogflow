@@ -1,24 +1,17 @@
-const { date } = require('../utils')
-const fs = require('fs')
+const { date, bus } = require('../utils')
 const tcccMga = require('tccc-mga-bus')
-
-const serviceTypeMap = {
-  DIAS_UTEIS: 1073,
-  SABADOS: 1079,
-  DOMIGOS_FERIADOS: 1072
-}
-
-const BUS_NOT_AVAIBLE_TODAY_MESSAGE = 'Essa linha não opera hoje :/'
 
 const formatTrips = departures =>
   departures.map(trip => `${trip.departure}`).join('\n')
 
 const getService = (calendar, serviceType) => {
-  const dayDepartures = calendar
-    .find(departure => departure.serviceId === serviceType)
+  const dayDepartures = bus.getDepartures({
+    calendar,
+    serviceType
+  })
 
   if (!dayDepartures) {
-    return BUS_NOT_AVAIBLE_TODAY_MESSAGE
+    return bus.messages.BUS_NOT_AVAIBLE_TODAY
   }
 
   return `${dayDepartures.serviceDesc}\n${formatTrips(dayDepartures.departures)}`
@@ -32,14 +25,14 @@ const handler = async body => {
   })
 
   if (date.isSunday()) {
-    return getService(calendar, serviceTypeMap.DOMIGOS_FERIADOS)
+    return getService(calendar, bus.serviceTypeMap.DOMIGOS_FERIADOS)
   }
 
   if (date.isSaturday()) {
-    return getService(calendar, serviceTypeMap.SABADOS)
+    return getService(calendar, bus.serviceTypeMap.SABADOS)
   }
 
-  return getService(calendar, serviceTypeMap.DIAS_UTEIS)
+  return getService(calendar, bus.serviceTypeMap.DIAS_UTEIS)
 }
 
 module.exports = {

@@ -5,9 +5,6 @@ const { actions } = require('./actions')
 const app = async (req, res) => {
   const body = await json(req)
 
-  console.log(body)
-  console.log('actions', actions)
-
   const queryResult = body.queryResult
 
   const action = actions
@@ -17,8 +14,16 @@ const app = async (req, res) => {
     return 'hello'
   }
 
+  const actionResponse = await action.handler(body)
+
+  if (Array.isArray(actionResponse)) {
+    return {
+      fulfillmentMessages: actionResponse 
+    }
+  }
+
   return {
-    fulfillmentText: await action.handler(body)
+    fulfillmentText: actionResponse
   }
 }
 
